@@ -1,0 +1,215 @@
+library(shiny)
+library(shinythemes)
+library(shinydashboard)
+library(DT)
+
+# Shiny UI -------
+ui <- fluidPage(
+  
+  navbarPage("TIDD v1.1",
+             
+    theme=shinytheme("flatly"), 
+    id = "main_navbar",
+    
+    tabPanel(
+      "About",
+  ),
+    tabPanel(
+      "Data Management",
+      fluidRow(column(
+        3, uiOutput("dart_currentTime", container = span)
+      ),
+      column(
+        3, uiOutput("dart_last_update", container = span)
+      )), 
+      sidebarLayout(
+        sidebarPanel(
+          width = 3,
+          
+          h5("File Loading"),
+          hr(style = "border-top: 1px solid #000000;"),
+          h6("Peptide-spectrum matching key info.:"),
+          h6("1. filename"),
+          h6("2. scan number"),
+          h6("3. charge"),
+          
+          br(),
+          selectInput('psmfile',"Select one PSM file (tab-deliminated): ",choices = c("", list.files('data/PSM/.')),
+          ),
+          
+          selectInput('msfile','Select list of spectrum files(*.mgf):', choices = c("",list.files('data/MGF/.')),multiple = TRUE),
+          hr(style = "border-top: 1px solid #000000;"),
+          
+          
+          uiOutput("dart_direction"),
+          uiOutput("dart_destination"),
+          br(),
+          br(),
+          h3("Custom URL"),
+          p(
+            "A custom URL can be used to pre select choices when loading the app.",
+            br(),
+            "Use the button below to create a URL for the choices currently selected."
+          ),
+          br(),
+          actionButton("loadButton", "Load Files  <GO!> ", class="btn-success")
+        ),
+        mainPanel
+        (
+          fluidRow(
+            
+            dashboardBody
+                  (
+                tags$style(HTML("
+
+
+                .box.box-solid.box-primary>.box-header {
+
+                }
+
+                .box.box-solid.box-primary{
+
+                border-left-color:#f7f8f9;
+                background:#f7f8f9
+                }
+
+                ")),
+                    
+                   column(width=8,
+                  fluidRow(
+                    tabBox
+                    (   width=12,
+                           id="psms", height="450px",
+                           tabPanel("PSMs",
+                                    {
+                                      textOutput('psm_filename')
+                                    }),
+                           tabPanel("Preview",
+                                    
+                                    dataTableOutput('psmlist_preview'),
+                                    
+                                    ),
+                           
+                    ),),
+                    fluidRow(
+                    tabBox
+                    (width=12,
+                      id="ms2", height="450px",
+                      tabPanel("MS/MS scans"),
+                      
+                    ),),
+                  ),
+               ),
+           
+              column(width = 4,
+                     box( 
+                       theme="flatly",
+                       h4("Feature extraction"),
+                      width = NULL, solidHeader = TRUE, status = "primary",
+                       hr(style = "border-top: 1px solid #000000;"),
+                       "Must be included features:    
+                               ",
+                       
+                      br(),
+                    
+                      selectInput("file_id","Spectrum file name:", multiple = FALSE, choices = list("====")),
+                      
+                      selectInput("scan_id","Scan number in mgf file:", multiple = FALSE, choices = list("====")),
+                      
+                      selectInput("cs_id"," Charge:", multiple = FALSE, choices = list("====")),
+                      
+                      selectInput("precursorMZ_id"," PrecursorMZ:", multiple = FALSE, choices = list("====")),
+                      
+                      selectInput("peptide_id"," Peptide:", multiple = FALSE, choices = list("====")),
+                      
+                      selectInput("protein_id"," Protein:", multiple = FALSE, choices = list("====")),
+                      
+                      
+                      hr(style = "border-top: 1px solid #000000;"),
+                      
+                      br(),
+                      
+                      actionButton("featureButton", " Extract <GO> !", class="btn-success")
+            
+                      
+                      )
+            
+        )
+      )
+      )
+    )
+  ),
+  tabPanel(
+    "Model Fitting",
+    fluidRow(column(
+      3, uiOutput("dart_currentTime", container = span)
+    ),
+    column(
+      3, uiOutput("dart_last_update", container = span)
+    )), 
+    sidebarLayout(
+      sidebarPanel(
+        width = 3,
+        
+        h5("PSMs for model fitting"),
+        hr(style = "border-top: 1px solid #000000;"),
+        h6("Tab-deliminated file:"),
+        h6("1. head: do not start with '#' symbol"),
+        h6("2. one column for one feature"),
+        
+        br(),
+        selectInput('psm_feature_file',"Select one PSM file : ",choices = c("", list.files('data/PSM/.')),
+        ),
+        actionButton("load_feature_file", " LOAD <GO> !", class="btn-success")
+        
+        
+      ),
+      mainPanel
+      (
+        fluidRow(
+          
+          dashboardBody
+          (
+            column(width=12,
+                   fluidRow(
+                     br(),
+                     tabBox(width=12,
+                            tabPanel("Feature selection",
+                     textOutput('feature_filename'),
+                     splitLayout(cellWidths = c("40%", "10%", "40%", "10%"),
+                                 DTOutput("pool"),
+                                 list(
+                                   br(),br(),br(),br(),br(),br(),br(),
+                                   actionButton("add", label = NULL, icon("arrow-right")),
+                                   br(),br(),
+                                   actionButton("remove", label = NULL, icon("arrow-left"))
+                                 ),
+                                 DTOutput("selected"),
+                                 list(
+                                   br(),br(),br(),br(),br(),br(),br(),
+                                   actionButton("add_all", label = NULL, icon("angle-double-right"), 
+                                                lib = "font-awesome"),
+                                   br(),br(),
+                                   actionButton("remove_all", label = NULL, icon("angle-double-left"), 
+                                                lib = "font-awesome")
+                                 )
+                     )
+                   ),),),
+                   fluidRow(
+                     tabBox
+                     (width=12,
+                       id="model_fit", height="450px",
+                       tabPanel("Model fitting"),
+                       
+                     ),),
+            ),
+          ),
+          
+        )
+      )
+    )
+  )
+  
+  )
+)
+

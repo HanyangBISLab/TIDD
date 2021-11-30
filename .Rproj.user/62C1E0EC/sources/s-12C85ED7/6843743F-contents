@@ -1,0 +1,52 @@
+library(shiny)
+library(DT)
+# Shiny Server Side -------
+
+pool_init <- data.frame(data = LETTERS[1:10])
+select_init <- data.frame(data = "")
+server <- function(input, output, session) {
+  
+  data_manage<-observeEvent(input$loadButton,{
+    
+    psms_part<-read.delim(paste0('data/PSM/',input$psmfile),nrows=5)
+    
+    output$psm_filename<-renderText(input$psmfile)
+    output$psmlist_preview<-renderDataTable(psms_part,options = list(scrollX = TRUE,
+                                                                lengthChange=FALSE,
+                                                                info=FALSE,
+                                                                searching=FALSE))
+    
+    updateSelectInput(session=session, inputId = "file_id",choices=names(psms_part))
+    updateSelectInput(session=session, inputId = "scan_id",choices=names(psms_part))
+    updateSelectInput(session=session, inputId = "cs_id",choices=names(psms_part))
+    
+    updateSelectInput(session=session, inputId = "precursorMZ_id",choices=names(psms_part))
+    updateSelectInput(session=session, inputId = "peptide_id",choices=names(psms_part))
+    updateSelectInput(session=session, inputId = "protein_id",choices=names(psms_part))
+    
+    psms<-read.delim(paste0('data/PSM/',input$psmfile))
+    
+    t1<-system("java JAVA/hello.java",intern=TRUE)
+    output$psm_filename<-renderText(t1)
+    })
+  
+    feature_part<-observeEvent(input$load2Button,{
+      
+      tmp<-read.delim(paste0('data/PSM/',input$psm_feature_file),nrows=1)
+      
+      output$feature_filename<-renderText(paste0("Input file:",input$psm_feature_file))
+      
+      n=3
+      
+      lst<-names(tmp)
+      
+      cnt<-as.integer(length(lst)/n)
+      cnt_remain<-length(length(lst))%%n
+      
+      updateCheckboxGroupInput(session,"check1",choices=lst,
+                              )
+      
+      })
+}
+
+

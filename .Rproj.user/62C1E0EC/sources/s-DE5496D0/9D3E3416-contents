@@ -1,0 +1,25 @@
+ibrary(shiny)
+
+#UI
+ui <- fluidPage(
+  
+  selectInput('mydropdown', label = 'Select', choices = 'No choices here yet'),
+  
+  fileInput('myfileinput', label = 'Select File', accept = c(".csv"))
+  
+)
+
+#Server
+server <- function(input, output,￣ session) {
+  
+  observeEvent(input$myfileinput, {
+    
+    mytable <- read.csv(input$myfileinput$datapath)
+    
+    updateSelectInput(session, "mydropdown", label = "Select", choices = colnames(mytable))
+    
+  })
+  
+}
+
+shinyApp(ui = ui, server = server)
