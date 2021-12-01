@@ -6,7 +6,7 @@ TIDD is a universal post-processing tool which supports confident peptideidentif
 Here, we support two types of TIDD version -- a simple GUI based TIDD and command version of TIDD
 
 ======================
-Code download from Github: https://github.com/HonglanLi/TIDD.git
+Code download from Github: https://github.com/HanyangBISLab/TIDD.git
 
 Download and test R&java code from R studio cloud: https://honglan-li.shinyapps.io/project/
 
