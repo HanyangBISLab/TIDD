@@ -28,7 +28,7 @@ So it required:
    > install.packages("shiny")
    > install.packages("shinythemes")
    > install.packages("shinyFiles")
-   > install.packages("shinythemes")
+   > install.packages("shinydashboard")
    > install.packages("ROCR")
    > install.packages("e1071")
    
