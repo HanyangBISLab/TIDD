@@ -1,9 +1,30 @@
+#   TIDD: peptide rescoring s/w
+#
+#   Written by H. Li <hllee@hanyang.ac.kr>
+#
+#   Copyright (C) 2022 BIS Labs, Hanyang Univ. Korea
+#
+#   TIDD is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   TIDD is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#   
+#   You should have received a copy of the GNU General Public License
+#   along with TIDD.  If not, see <http://www.gnu.org/licenses/>.
+
+
+
 library(shiny)
 library(e1071)
 library(ROCR)
 
 # Shiny Server Side -------
-options(shiny.maxRequestSize = 2048*1024^2)
+options(shiny.maxRequestSize = 10240*1024^2)
 
 server <- function(input, output, session) {
   
@@ -14,6 +35,16 @@ server <- function(input, output, session) {
     },
     content = function(file) {
       tmp<-read.delim(paste0('data/PSM/',input$downloadpsm))
+      
+      write.table(tmp, file,sep="\t")
+    })
+  output$downloadmgfData <- downloadHandler(
+    filename = function() { 
+      paste("D", Sys.Date(), "_",input$downloadmgf, sep="")
+    },
+    content = function(file) {
+      
+      tmp<-read.delim(paste0('data/MGF/test/',input$downloadmgf))
       
       write.table(tmp, file,sep="\t")
     })
@@ -237,8 +268,9 @@ server <- function(input, output, session) {
           for(iteration in 1: as.numeric(input$iteration))
           {
             
-            tar_c<-sample(tar_candidate_id,as.numeric(input$tain_size),replace=FALSE)
-            dec_c<-sample(dec_id,as.numeric(input$tain_size),replace=FALSE)
+            minTrain_size<-min(tar_candidate_id,dec_id, as.numeric(input$tain_size))
+            tar_c<-sample(tar_candidate_id,minTrain_size,replace=FALSE)
+            dec_c<-sample(dec_id,minTrain_size,replace=FALSE)
             
             CV<-as.numeric(input$k_cross)
             cv.error<-rep(0,CV)
@@ -353,6 +385,7 @@ server <- function(input, output, session) {
     }) 
   })
 }
+
 
 
 
