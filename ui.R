@@ -1,3 +1,24 @@
+#   TIDD: peptide rescoring s/w
+#
+#   Written by H. Li <hllee@hanyang.ac.kr>
+#
+#   Copyright (C) 2022 BIS Labs, Hanyang Univ. Korea
+#
+#   TIDD is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   TIDD is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#   
+#   You should have received a copy of the GNU General Public License
+#   along with TIDD.  If not, see <http://www.gnu.org/licenses/>.
+
+  
+  
 library(shiny)
 library(shinythemes)
 library(shinydashboard)
@@ -57,7 +78,7 @@ ui <- fluidPage(
                                hr(style = "border-top: 1px solid #000000;"),
                                
                                p("Download: "),
-                               tags$a(href="https://github.com/HonglanLi/TIDD.git", "1.Download code from github"),
+                               tags$a(href="https://github.com/HanyangBISLab/TIDD.git", "1.Download code from github"),
                                br(),
                                tags$a(href="https://rstudio.cloud/spaces/178915/project/2994889", "2.Download code from R studio cloud"),
                                br(),
@@ -117,9 +138,10 @@ ui <- fluidPage(
                       selectInput('downloadpsm',"PSM file: ",choices = c( list.files('data/PSM/.'))),
                       downloadButton('downloadData', 'Download *.tsv'),
                       
-                      # h5("Select mgf files to remove:"),
-                      # selectInput('msfile','MGF files:', choices = c("",list.files('data/MGF/Local/.')),selected=c(""), multiple = TRUE),
-                      # 
+                      
+                      selectInput('downloadmgf',"MGF file: ",choices = c( list.files('data/MGF/test/.'))),
+                      downloadButton('downloadmgfData', 'Download *.mgf'),
+                    
                       
                       br(),
                       br(),
@@ -127,8 +149,6 @@ ui <- fluidPage(
                       
                       
                )
-               
-               
                
              ),
              tabPanel(
