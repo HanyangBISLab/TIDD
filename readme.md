@@ -8,7 +8,7 @@ Here, we support two types of TIDD version -- a simple GUI based TIDD and comman
 ======================
 Code download from Github: https://github.com/HanyangBISLab/TIDD.git
 
-Download and test R&java code from R studio cloud: https://honglan-li.shinyapps.io/project/
+Download and test R&java code from R studio cloud: https://rstudio.cloud/spaces/178915/project/2994889
 
 Test Gui from shinyapps.io: https://honglan-li.shinyapps.io/project/
 
