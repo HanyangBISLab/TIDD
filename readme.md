@@ -90,12 +90,18 @@ So it required:
 
 - Extract TIDD features 
  
-   1. java -jar TIDD.java <options> < attributes> 
+   1. java -jar TIDD.jar <options> < attributes> 
 
-   You can run "java -jar TIDD.java -h" to check the options and their corresponding values
+   You can run "java -jar TIDD.jar -h" to check the options and their corresponding values
 
-   (If you need to calculate XCorr, run "java -jar XCorr.jar" additionally)
+   (If you need to calculate XCorr, run "java -jar Xcorr_v2.jar " additionally)
 
-   2. java -jar xcorr_v2.jar spectrumFile resultFile binWidth binOffset titleCol peptideCol precursorMZCol chargeCol mgffilenameCol header
+   2. java -jar Xcorr_v2.jar <options> < attributes> 
    
-   *detail: check usage (run java -jar *.jar)
+   *detail: check usage (run java -jar Xcorr_v2.jar)
+   
+   3. run $Rscript TIDD_ModelFit.R
+   
+   * Change parameters inside the file: from line 30 to 41
+   
+   
