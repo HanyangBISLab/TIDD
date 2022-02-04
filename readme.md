@@ -1,7 +1,7 @@
 
 TIDD
 
-TIDD is a universal post-processing tool which supports confident peptideidentifications regardless of the search engine adopted. TIDD can work for any(including newly developed) search engines because it calculates universalfeatures that assess peptide-spectrum match quality while it allows additional featuresprovided by search engines (or users) as well.
+TIDD is a universal post-processing tool which supports confident peptide identifications regardless of the search engine adopted. TIDD can work for any (including newly developed) search engines because it calculates universalfeatures that assess peptide-spectrum match quality while it allows additional featuresprovided by search engines (or users) as well.
 
 Here, we support two types of TIDD version -- a simple GUI based TIDD and command version of TIDD
 
@@ -11,6 +11,8 @@ Code download from Github: https://github.com/HanyangBISLab/TIDD.git
 Download and test R&java code from R studio cloud: https://rstudio.cloud/spaces/178915/project/2994889
 
 Test Gui from shinyapps.io: https://honglan-li.shinyapps.io/project/
+
+TIDD user manual files: https://docs.google.com/document/d/168oGySS15xrobeqTY54_QLMgWQofnPIApx6ma5ntGa8/edit?usp=sharing
 
 =====================
 
