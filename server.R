@@ -17,14 +17,12 @@
 #   You should have received a copy of the GNU General Public License
 #   along with TIDD.  If not, see <http://www.gnu.org/licenses/>.
 
-
-
 library(shiny)
 library(e1071)
 library(ROCR)
 
 # Shiny Server Side -------
-options(shiny.maxRequestSize = 10240*1024^2)
+options(shiny.maxRequestSize = 2048*1024^2)
 
 server <- function(input, output, session) {
   
@@ -36,17 +34,16 @@ server <- function(input, output, session) {
     content = function(file) {
       tmp<-read.delim(paste0('data/PSM/',input$downloadpsm))
       
-      write.table(tmp, file,sep="\t")
+      write.table(tmp, file,quote=FALSE,row.names=FALSE,sep="\t")
     })
   output$downloadmgfData <- downloadHandler(
     filename = function() { 
       paste("D", Sys.Date(), "_",input$downloadmgf, sep="")
     },
     content = function(file) {
-      
       tmp<-read.delim(paste0('data/MGF/test/',input$downloadmgf))
       
-      write.table(tmp, file,sep="\t")
+      write.table(tmp, file,quote=FALSE,row.names=FALSE,sep="\t")
     })
   
   observe({
@@ -268,9 +265,8 @@ server <- function(input, output, session) {
           for(iteration in 1: as.numeric(input$iteration))
           {
             
-            minTrain_size<-min(tar_candidate_id,dec_id, as.numeric(input$tain_size))
-            tar_c<-sample(tar_candidate_id,minTrain_size,replace=FALSE)
-            dec_c<-sample(dec_id,minTrain_size,replace=FALSE)
+            tar_c<-sample(tar_candidate_id,as.numeric(input$tain_size),replace=FALSE)
+            dec_c<-sample(dec_id,as.numeric(input$tain_size),replace=FALSE)
             
             CV<-as.numeric(input$k_cross)
             cv.error<-rep(0,CV)
@@ -385,7 +381,6 @@ server <- function(input, output, session) {
     }) 
   })
 }
-
 
 
 
