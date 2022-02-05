@@ -17,8 +17,7 @@
 #   You should have received a copy of the GNU General Public License
 #   along with TIDD.  If not, see <http://www.gnu.org/licenses/>.
 
-  
-  
+
 library(shiny)
 library(shinythemes)
 library(shinydashboard)
@@ -77,8 +76,11 @@ ui <- fluidPage(
                                
                                hr(style = "border-top: 1px solid #000000;"),
                                
+                               p("Tutorial:"),
+                               tags$a(href="https://docs.google.com/document/d/168oGySS15xrobeqTY54_QLMgWQofnPIApx6ma5ntGa8/edit?usp=sharing", "How to run TIDD-GUI"),
+                               br(),
                                p("Download: "),
-                               tags$a(href="https://github.com/HanyangBISLab/TIDD.git", "1.Download code from github"),
+                               tags$a(href="https://github.com/HonglanLi/TIDD.git", "1.Download code from github"),
                                br(),
                                tags$a(href="https://rstudio.cloud/spaces/178915/project/2994889", "2.Download code from R studio cloud"),
                                br(),
@@ -138,10 +140,10 @@ ui <- fluidPage(
                       selectInput('downloadpsm',"PSM file: ",choices = c( list.files('data/PSM/.'))),
                       downloadButton('downloadData', 'Download *.tsv'),
                       
+                       h5("Select mgf files to remove:"),
+                       selectInput('downloadmgf','MGF files:', choices = c("",list.files('data/MGF/test/.')),selected=c(""), multiple = TRUE),
+                       downloadButton('downloadmgfData', 'Download *.mgf'),
                       
-                      selectInput('downloadmgf',"MGF file: ",choices = c( list.files('data/MGF/test/.'))),
-                      downloadButton('downloadmgfData', 'Download *.mgf'),
-                    
                       
                       br(),
                       br(),
@@ -149,6 +151,8 @@ ui <- fluidPage(
                       
                       
                )
+               
+               
                
              ),
              tabPanel(
@@ -217,9 +221,12 @@ ui <- fluidPage(
                                   tabPanel("PSMs",
                                            {
                                              box(width=12, height="100",
-                                                 )
+                                             )
                                              box(width=12, height="450",
-                                             
+                                                 
+                                                 p("Tutorial:"),
+                                                 tags$a(href="https://docs.google.com/document/d/168oGySS15xrobeqTY54_QLMgWQofnPIApx6ma5ntGa8/edit?usp=sharing", "How to run TIDD-GUI: data management"),
+                                                 
                                                  textOutput('psm_filename'),
                                                  
                                                  h6("Features in the psm result file."),
@@ -292,7 +299,7 @@ ui <- fluidPage(
                               textInput("required_feature","required column indices:","1,2,3,4,5,6"),
                               textInput("dec_pre","Decoy prefix: ", "XXX_"),
                               textInput("frag_tol","Fragment tol.(Da): ", "0.025"),
-
+                              
                               
                               actionButton("featureButton", " Second.Extract!", class="btn-success"),
                               h6("Check the \"Extraction log\" tab whether it is finished or not")
@@ -355,6 +362,10 @@ ui <- fluidPage(
                                 br(),
                                 tabBox(width=12,height="450px",
                                        tabPanel("Feature selection",
+                                                br(),
+                                                p("Tutorial:"),
+                                                tags$a(href="https://docs.google.com/document/d/168oGySS15xrobeqTY54_QLMgWQofnPIApx6ma5ntGa8/edit?usp=sharing", "How to run TIDD-GUI: model fitting"),
+                                                br(),
                                                 textOutput('feature_filename'),
                                                 h5("Please select x, y and init score correctly."),
                                                 # h5("y: selected factor type of feature, such as \"TorD\""),
