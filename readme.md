@@ -11,7 +11,8 @@ Code download from Github: https://github.com/HanyangBISLab/TIDD.git
 Download and test R&java code from R studio cloud: https://rstudio.cloud/spaces/178915/project/2994889
 
 Test GUI from shinyapps.io: https://honglan-li.shinyapps.io/project/
-<This online GUI is just the for testing, it may take very long time (or be crashed) to run real dataset becasuse of limited RAM/disk size, which supported by free R cloud strudio. Therfore, we recommand you to run TIDD on local system.> 
+
+<*This online GUI is just the for testing, it may take very long time (or be crashed) to run real dataset becasuse of limited RAM/disk size, which supported by free R cloud strudio. Therfore, we recommand you to run TIDD on local system.> 
 
 TIDD user manual files: https://docs.google.com/document/d/168oGySS15xrobeqTY54_QLMgWQofnPIApx6ma5ntGa8/edit?usp=sharing
 
